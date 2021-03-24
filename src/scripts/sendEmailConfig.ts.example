@@ -1,4 +1,4 @@
-export const bccEmails = [
+export const bccEmails: string[] = [
 
 ];
 

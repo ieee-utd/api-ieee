@@ -1,4 +1,4 @@
-mport * as express from "express";
+import * as express from "express";
 import * as moment from "moment-timezone";
 import * as _ from "lodash";
 export let route = express.Router();
