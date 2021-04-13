@@ -1,6 +1,6 @@
 import * as express from "express";
-import * as moment from "moment-timezone";
-import * as _ from "lodash";
+import moment from "moment-timezone";
+import _ from "lodash";
 export let route = express.Router();
 
 import { cleanAll, cleanAnnouncement } from "../helpers/clean";
@@ -9,7 +9,7 @@ import { Event, EventRecurrence } from "../models";
 import { CreateEventSchema, UpdateEventSchema } from "../helpers/schema";
 import { TIMEZONE } from "../app";
 
-const validate = require('express-validation');
+import { validate } from 'express-validation'
 const crypto = require('crypto');
 const base64url = require('base64url');
 import { RRule, RRuleSet, rrulestr } from 'rrule';

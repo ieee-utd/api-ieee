@@ -1,33 +1,26 @@
 const gulp = require('gulp');
-const nodemon = require('gulp-nodemon');
 const ts = require('gulp-typescript');
+const nodemon = require('gulp-nodemon');
 const del = require('del');
-const uglifyes = require('uglify-es');
-const composer = require('gulp-uglify/composer');
-const minify = composer(uglifyes, console);
-const gutil = require('gulp-util')
-const run = require('gulp-run');
-
-var tsProject = ts.createProject('tsconfig.json');
+var tsProject = ts.createProject("tsconfig.json");
 
 gulp.task('clean', function() {
   return del(['dist/'])
 })
 
-gulp.task('compile', ['clean'], function () {
+gulp.task('compile', gulp.series('clean', function () {
+  return tsProject.src()
+      .pipe(tsProject())
+      .js.pipe(gulp.dest("dist"))
+}))
+
+gulp.task('build', gulp.series('clean', function() {
   return tsProject.src()
   .pipe(tsProject()).js
-  .pipe(gulp.dest('dist/'));
-});
+  .pipe(gulp.dest('dist/'))
+}))
 
-gulp.task('build', ['clean'], function() {
-  return tsProject.src()
-  .pipe(tsProject()).js
-//  .pipe(minify())
-  .pipe(gulp.dest('dist/'));
-})
-
-gulp.task('watch', ['compile'], function () {
+gulp.task('watch', gulp.series('compile', function () {
   nodemon({
     script: 'dist/app.js',
     ext: 'ts',
@@ -35,9 +28,10 @@ gulp.task('watch', ['compile'], function () {
     execMap: {
       ts: "node --trace-warnings"
     },
-    //  legacyWatch: true,
     debug: true
-  });
-});
+  })
+}))
 
-gulp.task('default', ['watch']);
+// gulp.task('default', ['watch']);
+
+gulp.task('default', gulp.parallel('watch'))

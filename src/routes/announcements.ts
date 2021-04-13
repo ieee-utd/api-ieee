@@ -1,6 +1,6 @@
 import * as express from "express";
-import * as moment from "moment";
-import * as _ from "lodash";
+import moment from "moment";
+import _ from "lodash";
 export let route = express.Router();
 
 import { cleanAll, cleanAnnouncement } from "../helpers/clean";
@@ -8,7 +8,7 @@ import { userCan } from "../helpers/verify";
 import { Announcement } from "../models";
 import { CreateAnnouncementSchema, UpdateAnnouncementSchema } from "../helpers/schema";
 
-const validate = require('express-validation');
+import { validate } from 'express-validation'
 const crypto = require('crypto');
 const base64url = require('base64url');
 

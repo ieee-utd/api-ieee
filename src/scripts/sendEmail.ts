@@ -3,7 +3,7 @@ require('dotenv').config();
 process.env.NODE_ENV = "script";
 
 import { sendEmailMsg } from "../helpers/mail";
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 import * as emailConfig from "./sendEmailConfig"; 
 

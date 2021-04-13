@@ -1,10 +1,7 @@
 import * as express from "express";
 
 const crypto = require('crypto');
-const validate = require('express-validation');
-// const EasyPbkdf2 = require('easy-pbkdf2');
-// const easyPbkdf2 = new EasyPbkdf2();
-// const randomize = require('randomize');
+import { validate } from 'express-validation'
 const base64url = require('base64url');
 
 import { cleanUser, cleanAll } from "../helpers/clean";

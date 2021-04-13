@@ -1,20 +1,18 @@
 //force pwetty colors
 process.env.FORCE_COLOR = "1";
 
-import * as express from "express";
-import * as compression from "compression";
-import * as bodyParser from "body-parser";
-import * as morgan from "morgan";
-import * as passport from "passport";
-import * as session from "express-session";
+import express from "express";
+import compression from "compression";
+import morgan from "morgan";
+import passport from "passport";
+import session from "express-session";
 
 const EasyPbkdf2 = require('easy-pbkdf2');
 const easyPbkdf2 = new EasyPbkdf2();
 
 //database
-import * as mongoose from "mongoose";
-// mongoose.set('debug', true);
-const MongoStore = require('connect-mongo')(session);
+import mongoose from "mongoose";
+import MongoStore from 'connect-mongo';
 
 const chalk = require('chalk');
 const _ = require('lodash');
@@ -53,7 +51,7 @@ if (process.env.NODE_ENV !== "script") {
 //Connect to database
 export const db = mongoose.connection;
 if (process.env.NODE_ENV !== "script") {
-  mongoose.connect(DATABASE_URI, { config: { autoIndex: true }, useNewUrlParser: true })
+  mongoose.connect(DATABASE_URI, { autoIndex: true })
   .then(async () => {
     //perform one-time database init here
   })
@@ -68,13 +66,6 @@ export const TIMEZONE = "America/Chicago";
 
 //init app
 export let app = express();
-
-let sessionStore = new MongoStore({
-  mongooseConnection: db,
-  touchAfter: 5 * 60, //cookie refresh interval - 5 minutes
-  ttl: 2 * 60 * 60, //2 hours
-  stringify: false //allow search
-});
 
 //middleware
 
@@ -112,7 +103,7 @@ morgan.format('devtime', developmentFormatLine);
 
 app.use(morgan('dev'));
 app.use(compression());
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(session({
   secret: process.env.SESSION_SECRET as string,
   saveUninitialized: false,
@@ -124,7 +115,12 @@ app.use(session({
     maxAge: 2 * 60 * 60 * 1000 //2 hours
     // secure: true, //enable if HTTPS
   },
-  store: sessionStore,
+  store: MongoStore.create({
+    mongoUrl: DATABASE_URI,
+    touchAfter: 5 * 60, //cookie refresh interval - 5 minutes
+    ttl: 2 * 60 * 60, //2 hours
+    stringify: false //allow search
+  }),
 }));
 
 // Passport setup

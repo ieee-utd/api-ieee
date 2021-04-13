@@ -11,7 +11,7 @@ const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 export function sendEmailMsg(msg: any) {
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     if (!process.env.SENDGRID_API_KEY) {
       return resolve();
       //Mail system did not send anything, but we quitely ignore the error

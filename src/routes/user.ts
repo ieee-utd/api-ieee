@@ -1,7 +1,6 @@
 import * as express from "express";
 import * as passport from "passport";
-
-const validate = require('express-validation')
+import { validate } from 'express-validation'
 const EasyPbkdf2 = require('easy-pbkdf2');
 const easyPbkdf2 = new EasyPbkdf2();
 const base64url = require('base64url');

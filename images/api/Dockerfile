@@ -1,3 +1,3 @@
-FROM node:10
+FROM node:14
 
 RUN npm install gulp -g
