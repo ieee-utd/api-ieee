@@ -31,7 +31,10 @@ s3.putObject(uploadFile, function(err,data)
     else {console.log(data);}
 });
 // var params = {
-//     Bucket: "ieee-forge",
+//     Bucket: "ieee-forge",]
+// lol i did
+// how long was I gone lol
+// not that long
 // };
 
 // s3.listObjects(params, function(err, data) {
